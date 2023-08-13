@@ -2,21 +2,23 @@
 
 namespace App\Filament\Resources\Shop;
 
-use App\Filament\Resources\Shop\BrandResource\RelationManagers\ProductsRelationManager;
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use App\Models\Shop\Product;
+use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Notifications\Notification;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
+use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\Shop\ProductResource\Pages;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\Shop\ProductResource\RelationManagers;
 use App\Filament\Resources\Shop\ProductResource\Widgets\ProductStats;
-use App\Models\Shop\Product;
-use Filament\Forms;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
-use Filament\Forms\Form;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use App\Filament\Resources\Shop\BrandResource\RelationManagers\ProductsRelationManager;
 
 class ProductResource extends Resource
 {
@@ -59,7 +61,9 @@ class ProductResource extends Resource
                                     ->required()
                                     ->unique(Product::class, 'slug', ignoreRecord: true),
 
-                                Forms\Components\MarkdownEditor::make('description')
+                                RichEditor::make('short_desc')->label('Short Product Description')
+                                    ->columnSpan('full'),
+                                RichEditor::make('description')->label('Full Product Description')
                                     ->columnSpan('full'),
                             ])
                             ->columns(2),
@@ -159,6 +163,14 @@ class ProductResource extends Resource
                                     ->relationship('categories', 'name')
                                     ->multiple()
                                     ->required(),
+                                Forms\Components\Select::make('team_id')
+                                    ->relationship('team', 'name')
+                                    ->required(),
+                            ]),
+                        Forms\Components\Section::make('Additional Features')
+                            ->schema([
+                                FileUpload::make('featured_image')->label('Feature Image'),
+                                FileUpload::make('customizer_image')->label('Customization Image')
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),
