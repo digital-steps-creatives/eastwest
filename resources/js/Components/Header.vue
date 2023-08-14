@@ -74,7 +74,7 @@ import CartDropdown from '@/Components/Cart/CartDropdown.vue';
                 >Home</Link
               >
             </li>
-            <li>
+            <!-- <li>
               <a
                 href="#"
                 class="block py-2 px-4 text-gray-700 border-b border-gray-100 hover:text-eastwest-500 lg:hover:bg-transparent lg:border-0  lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
@@ -87,7 +87,7 @@ import CartDropdown from '@/Components/Cart/CartDropdown.vue';
                 class="block py-2 px-4 text-gray-700 border-b border-gray-100 hover:text-eastwest-500 lg:hover:bg-transparent lg:border-0  lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                 >Our Blog</a
               >
-            </li>
+            </li> -->
 
             <li>
               <a
