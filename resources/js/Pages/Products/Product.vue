@@ -260,8 +260,8 @@ const makePlayer=()=> {
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-6xl" v-else>
             <div class="w-1/2">
                 <div class="relative curved-text">
-                    <curve-text class="absolute top-20" id="name">{{textHolder}}</curve-text>
-                    <curve-text class="absolute top-40" id="number" :height="350">{{numberHolder}}</curve-text>
+                    <curve-text class="absolute top-40" id="name">{{textHolder}}</curve-text>
+                    <curve-text class="absolute top-40" id="number" :height="450">{{numberHolder}}</curve-text>
                     <img :src="'/storage/' + product.customizer_image" class="w-full" :alt="product.name">
                 </div>
 
@@ -323,8 +323,9 @@ const makePlayer=()=> {
                             <label
                             v-for="patch in patches"
                             :key="patch.id"
-                            class="flex items-center space-x-2 cursor-pointer bg-gray-200 border-gray-400 border-2 rounded p-3 px-6 focus:border-eastwest-500 hover:border-eastwest-500"
+                            class="flex items-center space-x-2 cursor-pointer bg-gray-200 border-gray-400 border-2 rounded p-3 px-6 focus:border-eastwest-500 active:border-eastwest-500 hover:border-eastwest-500"
                             :id="patch.id"
+                            :class="{'active__badge bg-green-100' : patchSelected === patch.title}"
                             >
                             <input
                                 type="radio"
@@ -334,7 +335,7 @@ const makePlayer=()=> {
                                 v-model="patchSelected"
                                 :id="patch.id"
                             />
-                            <div class="w-10 h-10 rounded-full border-2 border-gray-300">
+                            <div class="w-10 h-10 rounded-full  focus:bg-eastwest-500">
                                 <img :src="patch.image" alt="Option Image" class="w-full h-full rounded-full" />
                             </div>
                             <span>{{ patch.title }}</span>
@@ -342,7 +343,7 @@ const makePlayer=()=> {
                         </div>
                     </div>
                     <div class="border py-6 px-6 mb-4">
-                        <button @click.prevent="addCustomCart(product)" class="w-full bg-eastwest-500 py-2.5 px-6 rounded text-white animate-pulse">Add to Cart</button>
+                        <button @click.prevent="addCustomCart(product)" class="w-full bg-eastwest-500 hover:bg-eastwest-700 py-2.5 px-6 rounded text-white">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -356,7 +357,7 @@ const makePlayer=()=> {
                         <article v-html="product.description"></article>
                     </tab>
                     <tab name="second" title="Reviews">
-                    Lorem...
+                    Coming soon ...
                     </tab>
                 </tabs>
             </div>

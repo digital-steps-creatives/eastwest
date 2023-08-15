@@ -3205,11 +3205,13 @@ a, button, img, input, span {
         left: 12rem;
         font-size: 50px;
         color: #020202;
+        top:11rem !important;
     }
     #number {
         left: 12rem;
-        font-size: 120px;
+        font-size: 125px;
         color: #020202;
+        top: 16rem !important;
     }
 
     span {
@@ -3364,4 +3366,7 @@ a, button, img, input, span {
 
         }
     }
+}
+.active__badge {
+    border-color: #03B2AD;
 }
