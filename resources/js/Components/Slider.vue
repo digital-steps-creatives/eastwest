@@ -18,7 +18,7 @@
                     }}</h3>
                     <h1 class="animated">{{ slide.header }}</h1>
                     <div class="slider-btn btn-hover">
-                        <Link class="border-2 px-6 py-1.5 text-gray-700 animated relative">{{ slide.button }}</Link>
+                        <Link :href="slide.url" class="border-2 px-6 py-1.5 text-gray-700 animated relative">{{ slide.button }}</Link>
                     </div>
                     </div>
                 </div>
