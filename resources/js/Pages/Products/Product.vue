@@ -261,7 +261,7 @@ const makePlayer=()=> {
             <div class="w-1/2">
                 <div class="relative curved-text">
                     <curve-text class="absolute top-40" id="name">{{textHolder}}</curve-text>
-                    <curve-text class="absolute top-40" id="number" :height="450">{{numberHolder}}</curve-text>
+                    <curve-text class="absolute top-40" id="number" :height="550">{{numberHolder}}</curve-text>
                     <img :src="'/storage/' + product.customizer_image" class="w-full" :alt="product.name">
                 </div>
 
