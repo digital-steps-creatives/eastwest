@@ -93,7 +93,7 @@ const promo = ref(false)
       <div class="flex flex-wrap justify-between mx-auto max-w-6xl">
         <div class="container mx-auto">
           <div class="flex my-3">
-            <div class="w-3/4 bg-white py-6">
+            <div class="w-full bg-white py-6">
               <div class="flex justify-between border-b pb-8">
                 <h1 class="font-semibold text-2xl">Shopping Cart</h1>
                 <h2 class="font-semibold text-2xl">{{ cart.totalItems }} Items</h2>
@@ -103,17 +103,17 @@ const promo = ref(false)
                   Product Details
                 </h3>
                 <h3
-                  class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"
+                  class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
                 >
                   Quantity
                 </h3>
                 <h3
-                  class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"
+                  class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
                 >
                   Price
                 </h3>
                 <h3
-                  class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center"
+                  class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5"
                 >
                   Total
                 </h3>
@@ -132,14 +132,14 @@ const promo = ref(false)
                     <span class="font-bold mb-4 text-sm">{{ item.name }}</span>
                     <span v-if="item.customAddons">
                         <span v-for="(custom, index) in item.customAddons" :key="index">
-                            <span class="font-medium text-sm block">Custom Name: <span class="text-eastwest-500">{{ custom.CustomNameAdded.customName }}</span></span>
-                                <span class="font-medium mb-3 text-sm block">Custom Number: <span class="text-eastwest-500">{{ custom.CustomNameAdded.customNumber }}</span></span>
-                                <span class="font-medium text-sm inline-flex">Patch Selected: <span class="text-eastwest-500 inline-flex relative -top-4 ml-3">
-                                    <span v-if="custom.patchChosen.MyPatch ==='Premier League'">
-                                        <img src="/images/2023_pl_patch.png" :alt="custom.patchChosen.MyPatch" class="w-10">
+                            <span class="font-medium text-sm block" v-if="custom?.CustomNameAdded">Custom Name: <span class="text-eastwest-500">{{ custom?.CustomNameAdded?.customName }}</span></span>
+                                <span class="font-medium mb-3 text-sm block" v-if="custom?.CustomNameAdded">Custom Number: <span class="text-eastwest-500">{{ custom?.CustomNameAdded?.customNumber }}</span></span>
+                                <span class="font-medium text-sm inline-flex" v-if="custom?.CustomNameAdded">Patch Selected: <span class="text-eastwest-500 inline-flex relative -top-4 ml-3">
+                                    <span v-if="custom?.patchChosen?.MyPatch ==='Premier League'">
+                                        <img src="/images/2023_pl_patch.png" :alt="custom?.patchChosen?.MyPatch" class="w-10">
                                     </span>
                                     <span v-else>
-                                        <img src="/images/Mens-Champions-League-22.png" :alt="custom.patchChosen.MyPatch" class="w-10">
+                                        <img src="/images/Mens-Champions-League-22.png" :alt="custom?.patchChosen?.MyPatch" class="w-10">
                                     </span>
                                 </span>
                             </span>
@@ -186,72 +186,60 @@ const promo = ref(false)
                     />
                   </svg>
                 </div>
-                <span class="text-center w-1/5 font-semibold text-sm"
-                  >{{ currencyFormat(item.price) }}</span
+                <span class="text-left w-1/5 font-medium text-sm"
+                  >
+                    <span v-if="item.customAddons">
+                        <span v-for="(custom, index) in item.customAddons" :key="index">
+                            <div class="mb-2">
+                               Name - addon <span class="px-4 py-1 bg-green-200 rounded-full text-green-600 text-sm">{{ custom?.CustomNameAdded.price }}</span>
+                            </div>
+                            <div>
+                                Number - addon <span class="px-4 py-1 bg-green-200 rounded-full text-green-600 text-sm">{{ custom?.patchChosen.price }}</span>
+                            </div>
+                        </span>
+                    </span>
+                  </span
                 >
                 <span class="text-center w-1/5 font-semibold text-sm"
+                v-if="item.customAddons"
                   >{{currencyFormat(Number(item.price) * item.quantity)}}</span
                 >
               </div>
 
+              <div class="flex justify-end border-t">
+                <div class=" mt-6">
+                <div
+                  class="flex font-semibold justify-between py-6 text-sm uppercase"
+                >
+                  <span class="mr-2">Total cost</span>
+                  <span>{{ currencyFormat(cartStore.totalAmount.toFixed(2)) }}</span>
+                </div>
 
-              <Link
+              </div>
+              </div>
+              <div class="flex justify-between">
+                <Link
                 href="/"
-                class="flex font-semibold text-eastwest-600 text-sm mt-10"
+                class="inline-flex items-center font-semibold text-eastwest-600 text-sm "
               >
                 <svg
-                  class="fill-current mr-2 text-eastwest-600 w-4"
+                  class="fill-current mr-2 text-eastwest-600 w-4 "
                   viewBox="0 0 448 512"
                 >
                   <path
                     d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"
                   />
                 </svg>
-                Continue Shopping
+                <span>Continue Shopping</span>
               </Link>
-            </div>
-
-            <div id="summary" class="w-1/4 px-8 py-6">
-              <h1 class="font-semibold text-2xl border-b pb-8">
-                Order Summary
-              </h1>
-              <div class="flex justify-between mt-10 mb-5">
-                <span class="font-semibold text-sm uppercase">Items {{ cart.totalItems }}</span>
-
-              </div>
-
-              <div class="py-10" v-if="promo ===true">
-                <label
-                  for="promo"
-                  class="font-semibold inline-block mb-3 text-sm uppercase"
-                  >Promo Code</label
-                >
-                <input
-                  type="text"
-                  id="promo"
-                  placeholder="Enter your code"
-                  class="p-2 text-sm w-full"
-                />
-              </div>
-              <button v-if="promo ===true"
-                class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase"
-              >
-                Apply
-              </button>
-              <div class="border-t mt-8">
-                <div
-                  class="flex font-semibold justify-between py-6 text-sm uppercase"
-                >
-                  <span>Total cost</span>
-                  <span>{{ currencyFormat(cartStore.totalAmount.toFixed(2)) }}</span>
-                </div>
-                <Link :href="route('checkout')"
-                  class="bg-eastwest-500 font-semibold w-full hover:bg-eastwest-600 py-3 px-6 text-sm text-white uppercase block text-center"
+              <Link :href="route('checkout')"
+                  class="bg-eastwest-500 font-semibold hover:bg-eastwest-600 py-3 px-8 text-sm text-white uppercase block text-center"
                 >
                   Checkout
                 </Link>
               </div>
             </div>
+
           </div>
         </div>
       </div>
