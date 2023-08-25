@@ -188,7 +188,7 @@ const promo = ref(false)
                 </div>
                 <span class="text-left w-1/5 font-medium text-sm"
                   >
-                    <span v-if="item.customAddons">
+                    <div v-if="item.customAddons">
                         <span v-for="(custom, index) in item.customAddons" :key="index">
                             <div class="mb-2">
                                Name - addon <span class="px-4 py-1 bg-green-200 rounded-full text-green-600 text-sm">{{ custom?.CustomNameAdded.price }}</span>
@@ -197,11 +197,19 @@ const promo = ref(false)
                                 Number - addon <span class="px-4 py-1 bg-green-200 rounded-full text-green-600 text-sm">{{ custom?.patchChosen.price }}</span>
                             </div>
                         </span>
-                    </span>
+                    </div>
+                    <div v-else>{{ currencyFormat(Number(item.price)) }}</div>
+                </span>
+                <span class="text-center w-1/5 font-semibold text-sm"
+                v-if="item.customAddons"
+                  >
+                  <span v-for="(custom, index) in item.customAddons" :key="index">
+                    {{currencyFormat(Number(item.price) + Number(custom?.CustomNameAdded.price) + Number(custom?.patchChosen.price) * item.quantity)}}
+                </span>
                   </span
                 >
                 <span class="text-center w-1/5 font-semibold text-sm"
-                v-if="item.customAddons"
+                v-else
                   >{{currencyFormat(Number(item.price) * item.quantity)}}</span
                 >
               </div>
