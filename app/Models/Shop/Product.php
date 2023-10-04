@@ -31,6 +31,7 @@ class Product extends Model implements HasMedia
         'backorder' => 'boolean',
         'requires_shipping' => 'boolean',
         'published_at' => 'date',
+        'product_attributes' => 'array'
     ];
 
     public function brand(): BelongsTo
@@ -51,5 +52,10 @@ class Product extends Model implements HasMedia
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class)->withPivot('quantity');
     }
 }

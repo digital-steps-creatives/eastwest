@@ -9,6 +9,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use App\Models\Shop\Product;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
@@ -101,23 +103,28 @@ class ProductResource extends Resource
                             ->columns(2),
                         Forms\Components\Section::make('Inventory')
                             ->schema([
-                                Forms\Components\TextInput::make('sku')
-                                    ->label('SKU (Stock Keeping Unit)')
-                                    ->unique(Product::class, 'sku', ignoreRecord: true)
-                                    ->required(),
-
-                                Forms\Components\TextInput::make('barcode')
-                                    ->label('Barcode (ISBN, UPC, GTIN, etc.)')
-                                    ->unique(Product::class, 'barcode', ignoreRecord: true)
-                                    ->required(),
-
-                                Forms\Components\TextInput::make('qty')
-                                    ->label('Quantity')
-                                    ->numeric()
-                                    ->rules(['integer', 'min:0'])
-                                    ->required(),
-
-                                Forms\Components\TextInput::make('security_stock')
+                                Repeater::make('product_attributes')
+                                    ->schema([
+                                        Select::make('size')
+                                            ->options([
+                                                'L' => 'L',
+                                                'XL' => 'XL',
+                                                'M' => 'M',
+                                                'XXL' => 'XXL',
+                                                'S' => 'S',
+                                            ]),
+                                        Forms\Components\TextInput::make('sku')
+                                            ->label('SKU (Stock Keeping Unit)')
+                                            ->unique(Product::class, 'sku', ignoreRecord: true)
+                                            ->required(),
+                                        Forms\Components\TextInput::make('qty')
+                                            ->label('Quantity')
+                                            ->numeric()
+                                            ->rules(['integer', 'min:0'])
+                                            ->required(),
+                                    ])->columnSpan('full')
+                                    ->defaultItems(3),
+                                    Forms\Components\TextInput::make('security_stock')
                                     ->helperText('The safety stock is the limit stock for your products which alerts you if the product stock will soon be out of stock.')
                                     ->numeric()
                                     ->rules(['integer', 'min:0'])
